@@ -421,10 +421,12 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             return;
 
         var singularityUid = args.EventHorizon.Owner;
-        var singularityPos = Transform(singularityUid).Coordinates;
-        var horizonRadius = args.EventHorizon.Radius;
+        var singularityXform = Transform(singularityUid);
+        var generatorXform = Transform(uid);
 
-        var generatorPos = Transform(uid).Coordinates;
+        var singularityPos = _transformSystem.GetWorldPosition(singularityXform);
+        var generatorPos = _transformSystem.GetWorldPosition(generatorXform);
+        var horizonRadius = args.EventHorizon.Radius;
 
         var distance = (generatorPos - singularityPos).Length();
 
