@@ -114,6 +114,7 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
     /// <param name="uid">The uid of the PA particles have collided with.</param>
     /// <param name="component">The state of the PA particles.</param>
     /// <param name="args">The state of the beginning of the collision.</param>
+    /// Arcane-Edit-Start: теперь генератор проверяет наличие сдерживающего поля более щедяще и допускает запуск.
     private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, ref StartCollideEvent args)
     {
         if (!TryComp<SingularityGeneratorComponent>(args.OtherEntity, out var generatorComp))
@@ -131,7 +132,7 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
         {
             var transform = Transform(args.OtherEntity);
             var directions = Enum.GetValues<Direction>().Length;
-            for (var i = 0; i < directions - 1; i += 2) // только кардинальные
+            for (var i = 0; i < directions - 1; i += 2)
             {
                 if (CheckContainmentField((Direction) i, new Entity<SingularityGeneratorComponent>(args.OtherEntity, generatorComp), transform))
                     foundDirections++;
@@ -162,6 +163,7 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
 
         QueueDel(uid);
     }
+    /// Arcane-Edit-End
     #endregion Event Handlers
 
     /// <summary>
