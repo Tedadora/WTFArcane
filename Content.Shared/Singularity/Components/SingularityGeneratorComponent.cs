@@ -43,7 +43,7 @@ public sealed partial class SingularityGeneratorComponent : Component
     /// Maximum distance at which the generator will check for a field at
     /// </summary>
     [DataField]
-    public float FailsafeDistance = 28;
+    public float FailsafeDistance = 16;
 
     /// <summary>
     ///     The prototype ID used to spawn a singularity.
