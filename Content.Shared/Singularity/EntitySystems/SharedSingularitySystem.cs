@@ -191,7 +191,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <summary>
     /// The level at and above which a singularity should be capable of breaching containment.
     /// </summary>
-    public const byte SingularityBreachThreshold = 7;
+    public const byte SingularityBreachThreshold = 7; /// Arcane-Edit: {5} > {7}
 
     /// <summary>
     /// Derives the proper gravity well radius for a singularity from its state.

@@ -114,7 +114,6 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
     /// <param name="uid">The uid of the PA particles have collided with.</param>
     /// <param name="component">The state of the PA particles.</param>
     /// <param name="args">The state of the beginning of the collision.</param>
-    /// Arcane-Edit-Start: теперь генератор проверяет наличие сдерживающего поля более щедяще и допускает запуск.
     private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, ref StartCollideEvent args)
     {
         if (!TryComp<SingularityGeneratorComponent>(args.OtherEntity, out var generatorComp))
@@ -127,7 +126,7 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
             return;
         }
 
-        int foundDirections = 0;
+        int foundDirections = 0; /// Arcane-Edit-Start
         if (!generatorComp.FailsafeDisabled)
         {
             var transform = Transform(args.OtherEntity);
@@ -139,7 +138,7 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
             }
         }
 
-        if (foundDirections < 2 && !generatorComp.FailsafeDisabled)
+        if (foundDirections < 2 && !generatorComp.FailsafeDisabled) /// Arcane Edit-End
         {
             generatorComp.NextFailsafe = _timing.CurTime + generatorComp.FailsafeCooldown;
             PopupSystem.PopupEntity(Loc.GetString("comp-generator-failsafe", ("target", args.OtherEntity)), args.OtherEntity, PopupType.LargeCaution);

@@ -51,6 +51,7 @@ public sealed class ContainmentFieldSystem : EntitySystem
         }
     }
 
+    /// Arcane-Start
     private void HandleEventHorizon(EntityUid uid, ContainmentFieldComponent component, ref EventHorizonAttemptConsumeEntityEvent args)
     {
         if (args.Cancelled)
@@ -70,3 +71,4 @@ public sealed class ContainmentFieldSystem : EntitySystem
             args.Cancelled = true;
     }
 }
+/// Arcane-End
