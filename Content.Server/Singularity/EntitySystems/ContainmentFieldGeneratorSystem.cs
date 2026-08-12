@@ -201,9 +201,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (component.PowerBuffer >= component.PowerMinimum)
         {
             var directions = Enum.GetValues<Direction>().Length;
-            for (int i = 0; i < directions-1; i+=2)
+            for (int i = 0; i < directions - 1; i += 2)
             {
-                var dir = (Direction)i;
+                var dir = (Direction) i;
 
                 if (component.Connections.ContainsKey(dir))
                     continue; // This direction already has an active connection
@@ -395,7 +395,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         _visualizer.SetData(generator, ContainmentFieldGeneratorVisuals.FieldLight, generator.Comp.Connections.Count switch
         {
-            >1 => FieldLevelVisuals.MultipleFields,
+            > 1 => FieldLevelVisuals.MultipleFields,
             1 => FieldLevelVisuals.OneField,
             _ => generator.Comp.Enabled ? FieldLevelVisuals.On : FieldLevelVisuals.NoLevel
         });
@@ -430,5 +430,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         if (distance > horizonRadius)
             args.Cancelled = true;
+        /// Arcane=Edit-End
     }
-    /// Arcane=Edit-End
+}
