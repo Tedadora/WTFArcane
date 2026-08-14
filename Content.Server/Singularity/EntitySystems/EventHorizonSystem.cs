@@ -85,13 +85,18 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         while (query.MoveNext(out var uid, out var eventHorizon, out var xform))
         {
             var curTime = _timing.CurTime;
-            if (eventHorizon.NextRadiusUpdateTime <= curTime && /// Arcane-Start
-                eventHorizon.EffectiveRadiusForFields != eventHorizon.Radius)
+            if (eventHorizon.NextRadiusUpdateTime <= curTime && eventHorizon.PendingRadius != 0) /// Arcane-Start
             {
-                eventHorizon.EffectiveRadiusForFields = eventHorizon.Radius;
-                eventHorizon.NextRadiusUpdateTime = TimeSpan.MaxValue;
-                Dirty(uid, eventHorizon);
+                if (eventHorizon.PendingRadius != eventHorizon.Radius)
+                {
+                    _horizons.SetRadius(uid, eventHorizon.PendingRadius, false, eventHorizon);
+                    _horizons.UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
+                    eventHorizon.PendingRadius = 0;
+                    eventHorizon.NextRadiusUpdateTime = TimeSpan.MaxValue;
+                    Dirty(uid, eventHorizon);
+                }
             } /// Arcane-End
+
             if (eventHorizon.NextConsumeWaveTime <= curTime)
                 Update(uid, eventHorizon, xform);
         }

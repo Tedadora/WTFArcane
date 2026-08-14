@@ -124,17 +124,26 @@ public abstract class SharedSingularitySystem : EntitySystem
         if (!Resolve(uid, ref singularity))
             return;
 
+        /// Arcane-Start
         if (TryComp<EventHorizonComponent>(uid, out var eventHorizon))
         {
-            _horizons.SetRadius(uid, EventHorizonRadius(singularity), false, eventHorizon);
+            float newRadius = EventHorizonRadius(singularity);
             _horizons.SetCanBreachContainment(uid, CanBreachContainment(singularity), false, eventHorizon);
-            _horizons.UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
 
-            float oldRadius = oldValue - 0.5f; /// Arcane-Start
-            if (oldValue < 1) oldRadius = 0f;
-            eventHorizon.EffectiveRadiusForFields = oldRadius;
-            eventHorizon.NextRadiusUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(2); /// Arcane-End
+            if (oldValue == 0)
+            {
+                _horizons.SetRadius(uid, newRadius, false, eventHorizon);
+                _horizons.UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
+                eventHorizon.PendingRadius = 0;
+                eventHorizon.NextRadiusUpdateTime = TimeSpan.MaxValue;
+            }
+            else
+            {
+                eventHorizon.PendingRadius = newRadius;
+                eventHorizon.NextRadiusUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(2);
+            }
         }
+        /// Arcane-End
 
         if (TryComp<PhysicsComponent>(uid, out var body))
         {
