@@ -11,7 +11,7 @@ namespace Content.Shared.Singularity.Components;
 /// Also makes the associated entity destroy other entities upon contact.
 /// Primarily managed by <see cref="SharedEventHorizonSystem"/> and its server/client versions.
 /// </summary>
-[Access(friends: typeof(SharedEventHorizonSystem), typeof(SharedSingularitySystem))] /// Arcane-Edit
+[Access(friends: new[] { typeof(SharedEventHorizonSystem), typeof(SharedSingularitySystem) })] /// Arcane-Edit
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class EventHorizonComponent : Component
 {
