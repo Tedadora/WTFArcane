@@ -53,7 +53,19 @@ public sealed class ContainmentFieldSystem : EntitySystem
 
     private void HandleEventHorizon(EntityUid uid, ContainmentFieldComponent component, ref EventHorizonAttemptConsumeEntityEvent args)
     {
-        if(!args.Cancelled && !args.EventHorizon.CanBreachContainment)
+        if (args.Cancelled) /// Arcane-Edit-Start
+            return;
+
+        var singularityUid = args.EventHorizon.Owner;
+        var singularityXform = Transform(singularityUid);
+        var fieldXform = Transform(uid);
+
+        var singularityPos = _transformSystem.GetWorldPosition(singularityXform);
+        var fieldPos = _transformSystem.GetWorldPosition(fieldXform);
+        var horizonRadius = args.EventHorizon.Radius;
+
+        var distance = (fieldPos - singularityPos).Length();
+
+        if (distance > horizonRadius)
             args.Cancelled = true;
-    }
-}
+    } /// Arcane-Edit-End
