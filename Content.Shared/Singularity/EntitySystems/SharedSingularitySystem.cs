@@ -22,7 +22,8 @@ public abstract class SharedSingularitySystem : EntitySystem
     [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly IViewVariablesManager Vvm = default!;
-#endregion Dependencies
+    [Dependency] private readonly IGameTiming _timing = default!; /// Arcane
+    #endregion Dependencies
 
     /// <summary>
     /// The minimum level a singularity can be set to.
@@ -127,6 +128,11 @@ public abstract class SharedSingularitySystem : EntitySystem
             _horizons.SetRadius(uid, EventHorizonRadius(singularity), false, eventHorizon);
             _horizons.SetCanBreachContainment(uid, CanBreachContainment(singularity), false, eventHorizon);
             _horizons.UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
+
+            float oldRadius = oldValue - 0.5f; /// Arcane-Start
+            if (oldValue < 1) oldRadius = 0f;
+            eventHorizon.EffectiveRadiusForFields = oldRadius;
+            eventHorizon.NextRadiusUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(2); /// Arcane-End
         }
 
         if (TryComp<PhysicsComponent>(uid, out var body))
