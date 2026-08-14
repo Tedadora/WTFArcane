@@ -8,7 +8,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
+using Robust.Shared.Timing; /// Arcane
 
 namespace Content.Shared.Singularity.EntitySystems;
 
