@@ -67,6 +67,20 @@ public sealed partial class EventHorizonComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public bool BeingConsumedByAnotherEventHorizon = false;
 
+    /// Arcane-Edit-Start
+    /// <summary>
+    /// The radius used to check for field destruction. May lag behind the main radius for a while.
+    /// </summary>
+    [DataField("effectiveRadiusForFields")]
+    public float EffectiveRadiusForFields;
+
+    /// <summary>
+    /// The time when effectiveRadiusForFields will be updated to the base radius.
+    /// </summary>
+    [DataField("nextRadiusUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
+    public TimeSpan NextRadiusUpdateTime; /// Arcane-Edit-End
+
     #region Update Timing
 
     /// <summary>
