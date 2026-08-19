@@ -1,4 +1,4 @@
-ent-MobFelinidBase = Urist McFelinid
+ent-MobFelinidBase = Urist McBestid
     .desc = { ent-BaseMobHuman.desc }
-ent-MobFelinidDummy = Urist McHands
-    .desc = A dummy felinid meant to be used in character setup.
+ent-MobFelinidDummy = Urist McBestid
+    .desc = A dummy bestid meant to be used in character setup.

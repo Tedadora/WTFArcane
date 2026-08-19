@@ -1,4 +1,4 @@
-ent-OrganFelinidEars = кошачьи уши
+ent-OrganFelinidEars = уши бестида
     .desc = Их хранение потенциально может быть заразным.
-ent-OrganFelinidTail = кошачий хвост
+ent-OrganFelinidTail = хвост бестида
     .desc = Действительно ли вам это нужно?
